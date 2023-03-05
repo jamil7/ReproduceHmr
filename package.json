@@ -1,0 +1,25 @@
+{
+  "name": "ReproduceHmr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pre-start": "dotnet tool restore && pnpm install",
+    "start": "pnpm fable-watch",
+    "build": "pnpm clean && pnpm fable-build",
+    "clean": "rm -rf dist && rm -rf fable",
+    "fable-watch": "dotnet fable watch src -o fable --run vite",
+    "fable-build": "dotnet fable src -o fable --run vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "remotedev": "^0.2.9",
+    "vite": "^4.1.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
