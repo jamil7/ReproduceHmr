@@ -1,9 +1,14 @@
 import { FSharpRef, Union, Record } from "./fable_modules/fable-library.4.0.0-theta-018/Types.js";
-import { getCaseFields, getCaseName as getCaseName_1, isUnion, union_type, record_type, int32_type } from "./fable_modules/fable-library.4.0.0-theta-018/Reflection.js";
-import { Cmd_none } from "./fable_modules/Fable.Elmish.4.0.0/cmd.fs.js";
+import { getCaseFields, getCaseName as getCaseName_1, isUnion, string_type, union_type, record_type, int32_type } from "./fable_modules/fable-library.4.0.0-theta-018/Reflection.js";
+import { singleton } from "./fable_modules/fable-library.4.0.0-theta-018/AsyncBuilder.js";
+import { Cmd_map, Cmd_none } from "./fable_modules/Fable.Elmish.4.0.0/cmd.fs.js";
 import { createElement } from "react";
+import * as react from "react";
+import { join } from "./fable_modules/fable-library.4.0.0-theta-018/String.js";
 import { Interop_reactApi } from "./fable_modules/Feliz.2.4.1/Interop.fs.js";
-import { empty as empty_1, cons, singleton, ofArray } from "./fable_modules/fable-library.4.0.0-theta-018/List.js";
+import { empty as empty_1, cons, singleton as singleton_1, ofArray } from "./fable_modules/fable-library.4.0.0-theta-018/List.js";
+import { PageModule_parseFromUrlSegments, Page$reflection, Page, Cmd_navigateToPage } from "./Router.js";
+import { RouterModule_router, RouterModule_urlSegments } from "./fable_modules/Feliz.Router.4.0.0/Router.fs.js";
 import { Program_Internal_withReactBatchedUsing } from "./fable_modules/Fable.Elmish.React.4.0.0/react.fs.js";
 import { lazyView2With } from "./fable_modules/Fable.Elmish.HMR.7.0.0/common.fs.js";
 import { uncurry } from "./fable_modules/fable-library.4.0.0-theta-018/Util.js";
@@ -17,33 +22,33 @@ import { empty } from "./fable_modules/Thoth.Json.6.0.0/Extra.fs.js";
 import { ExtraCoders } from "./fable_modules/Thoth.Json.6.0.0/Types.fs.js";
 import { fromValue } from "./fable_modules/Thoth.Json.6.0.0/Decode.fs.js";
 import { Debugger_ConnectionOptions } from "./fable_modules/Fable.Elmish.Debugger.4.0.0/debugger.fs.js";
-import { join } from "./fable_modules/fable-library.4.0.0-theta-018/String.js";
 import { Options$1 } from "./fable_modules/Fable.Elmish.Debugger.4.0.0/Fable.Import.RemoteDev.fs.js";
 import { connectViaExtension } from "remotedev";
 import { defaultOf } from "./fable_modules/fable-library.4.0.0-theta-018/Util.js";
 import { current as current_2 } from "./fable_modules/Fable.Elmish.HMR.7.0.0/Bundler.fs.js";
 import { Internal_saveState, Internal_tryRestoreState } from "./fable_modules/Fable.Elmish.HMR.7.0.0/hmr.fs.js";
-import { Cmd_map, Cmd_none as Cmd_none_1 } from "./fable_modules/Fable.Elmish.4.0.0/cmd.fs.js";
+import { Cmd_map as Cmd_map_1, Cmd_none as Cmd_none_1 } from "./fable_modules/Fable.Elmish.4.0.0/cmd.fs.js";
 import { Msg$1 } from "./fable_modules/Fable.Elmish.HMR.7.0.0/hmr.fs.js";
 import { Sub_map, Sub_batch } from "./fable_modules/Fable.Elmish.4.0.0/sub.fs.js";
 import { ProgramModule_map, ProgramModule_runWith } from "./fable_modules/Fable.Elmish.4.0.0/program.fs.js";
+import "../index.css";
 
-export class App_Model extends Record {
+export class Page1_Model extends Record {
     constructor(Counter) {
         super();
         this.Counter = (Counter | 0);
     }
 }
 
-export function App_Model$reflection() {
-    return record_type("App.App.Model", [], App_Model, () => [["Counter", int32_type]]);
+export function Page1_Model$reflection() {
+    return record_type("App.Page1.Model", [], Page1_Model, () => [["Counter", int32_type]]);
 }
 
-export function App_Model_get_Init() {
-    return new App_Model(0);
+export function Page1_Model_get_Init() {
+    return new Page1_Model(0);
 }
 
-export class App_Msg extends Union {
+export class Page1_Msg extends Union {
     constructor(tag, fields) {
         super();
         this.tag = tag;
@@ -54,32 +59,37 @@ export class App_Msg extends Union {
     }
 }
 
-export function App_Msg$reflection() {
-    return union_type("App.App.Msg", [], App_Msg, () => [[], []]);
+export function Page1_Msg$reflection() {
+    return union_type("App.Page1.Msg", [], Page1_Msg, () => [[], []]);
 }
 
-export function App_init() {
-    return [App_Model_get_Init(), Cmd_none()];
+export function Page1_asyncGet() {
+    return singleton.Delay(() => singleton.Return("hi there"));
 }
 
-export function App_update(msg, model) {
+export function Page1_init() {
+    return [Page1_Model_get_Init(), Cmd_none()];
+}
+
+export function Page1_update(msg, model) {
     if (msg.tag === 1) {
-        return [new App_Model(model.Counter - 1), Cmd_none()];
+        return [new Page1_Model(model.Counter - 1), Cmd_none()];
     }
     else {
-        return [new App_Model(model.Counter + 1), Cmd_none()];
+        return [new Page1_Model(model.Counter + 1), Cmd_none()];
     }
 }
 
-export function App_view(model, dispatch) {
+export function Page1_view(model, dispatch) {
     const children = ofArray([createElement("button", {
+        className: join(" ", ["bg-orange-500"]),
         onClick: (_e) => {
-            dispatch(new App_Msg(0, []));
+            dispatch(new Page1_Msg(0, []));
         },
         children: Interop_reactApi.Children.toArray(["++"]),
     }), createElement("br", {}), model.Counter, createElement("br", {}), createElement("button", {
         onClick: (_e_1) => {
-            dispatch(new App_Msg(1, []));
+            dispatch(new Page1_Msg(1, []));
         },
         children: Interop_reactApi.Children.toArray(["-"]),
     })]);
@@ -87,6 +97,183 @@ export function App_view(model, dispatch) {
         children: Interop_reactApi.Children.toArray(Array.from(children)),
     });
 }
+
+export class Home_Model extends Record {
+    constructor(Foo) {
+        super();
+        this.Foo = Foo;
+    }
+}
+
+export function Home_Model$reflection() {
+    return record_type("App.Home.Model", [], Home_Model, () => [["Foo", string_type]]);
+}
+
+export function Home_Model_get_Init() {
+    return new Home_Model("");
+}
+
+export class Home_Msg extends Union {
+    constructor(tag, fields) {
+        super();
+        this.tag = tag;
+        this.fields = fields;
+    }
+    cases() {
+        return ["ButtonClicked"];
+    }
+}
+
+export function Home_Msg$reflection() {
+    return union_type("App.Home.Msg", [], Home_Msg, () => [[]]);
+}
+
+export function Home_init() {
+    return [Home_Model_get_Init(), Cmd_none()];
+}
+
+export function Home_update(msg, model) {
+    return [model, Cmd_navigateToPage(new Page(1, []))];
+}
+
+export function Home_view(_model, dispatch) {
+    const children = singleton_1(createElement("button", {
+        onClick: (_arg) => {
+            dispatch(new Home_Msg(0, []));
+        },
+        className: join(" ", ["text-lg"]),
+        children: Interop_reactApi.Children.toArray(["navigate to page"]),
+    }));
+    return createElement("div", {
+        children: Interop_reactApi.Children.toArray(Array.from(children)),
+    });
+}
+
+export class App_SubModel extends Union {
+    constructor(tag, fields) {
+        super();
+        this.tag = tag;
+        this.fields = fields;
+    }
+    cases() {
+        return ["Home", "Page1"];
+    }
+}
+
+export function App_SubModel$reflection() {
+    return union_type("App.App.SubModel", [], App_SubModel, () => [[["homeModel", Home_Model$reflection()]], [["page1Model", Page1_Model$reflection()]]]);
+}
+
+export class App_Model extends Record {
+    constructor(SubModel) {
+        super();
+        this.SubModel = SubModel;
+    }
+}
+
+export function App_Model$reflection() {
+    return record_type("App.App.Model", [], App_Model, () => [["SubModel", App_SubModel$reflection()]]);
+}
+
+export function App_Model_get_Init() {
+    return new App_Model(new App_SubModel(0, [Home_Model_get_Init()]));
+}
+
+export class App_Msg extends Union {
+    constructor(tag, fields) {
+        super();
+        this.tag = tag;
+        this.fields = fields;
+    }
+    cases() {
+        return ["UrlChanged", "HomeMsg", "Page1Msg"];
+    }
+}
+
+export function App_Msg$reflection() {
+    return union_type("App.App.Msg", [], App_Msg, () => [[["page", Page$reflection()]], [["homeMsg", Home_Msg$reflection()]], [["page1Msg", Page1_Msg$reflection()]]]);
+}
+
+export function App_updateUrl(model, nextPage) {
+    const show = (subModel) => (new App_Model(subModel));
+    if (nextPage.tag === 1) {
+        const patternInput_1 = Page1_init();
+        const customerModel = patternInput_1[0];
+        const customerCmd = patternInput_1[1];
+        return [show(new App_SubModel(1, [customerModel])), Cmd_map((arg_3) => (new App_Msg(2, [arg_3])), customerCmd)];
+    }
+    else {
+        const patternInput = Home_init();
+        const homeModel = patternInput[0];
+        const homeCmd = patternInput[1];
+        return [show(new App_SubModel(0, [homeModel])), Cmd_map((arg_1) => (new App_Msg(1, [arg_1])), homeCmd)];
+    }
+}
+
+export function App_init() {
+    let fullPath;
+    const nextPage = PageModule_parseFromUrlSegments((fullPath = (window.location.pathname + window.location.search), RouterModule_urlSegments(fullPath, 2)));
+    return App_updateUrl(App_Model_get_Init(), nextPage);
+}
+
+export function App_update(msg, model) {
+    const matchValue = model.SubModel;
+    if (msg.tag === 1) {
+        if (matchValue.tag === 0) {
+            const homeModel = matchValue.fields[0];
+            const homeMsg = msg.fields[0];
+            const patternInput = Home_update(homeMsg, homeModel);
+            const homeModel_1 = patternInput[0];
+            const homeCmd = patternInput[1];
+            return [new App_Model(new App_SubModel(0, [homeModel_1])), Cmd_map((arg) => (new App_Msg(1, [arg])), homeCmd)];
+        }
+        else {
+            return [model, Cmd_none()];
+        }
+    }
+    else if (msg.tag === 2) {
+        if (matchValue.tag === 1) {
+            const page1Model = matchValue.fields[0];
+            const page1Msg = msg.fields[0];
+            const patternInput_1 = Page1_update(page1Msg, page1Model);
+            const page1Model_1 = patternInput_1[0];
+            const page1Cmd = patternInput_1[1];
+            return [new App_Model(new App_SubModel(1, [page1Model_1])), Cmd_map((arg_1) => (new App_Msg(2, [arg_1])), page1Cmd)];
+        }
+        else {
+            return [model, Cmd_none()];
+        }
+    }
+    else {
+        const nextPage = msg.fields[0];
+        return App_updateUrl(model, nextPage);
+    }
+}
+
+export function App_view(model, dispatch) {
+    let currentPage;
+    const matchValue = model.SubModel;
+    if (matchValue.tag === 1) {
+        const page1Model = matchValue.fields[0];
+        currentPage = Page1_view(page1Model, (arg_3) => {
+            dispatch(new App_Msg(2, [arg_3]));
+        });
+    }
+    else {
+        const homeModel = matchValue.fields[0];
+        currentPage = Home_view(homeModel, (arg_1) => {
+            dispatch(new App_Msg(1, [arg_1]));
+        });
+    }
+    return RouterModule_router({
+        hashMode: 2,
+        onUrlChanged: (arg_6) => {
+            dispatch(new App_Msg(0, [PageModule_parseFromUrlSegments(arg_6)]));
+        },
+        application: react.createElement(react.Fragment, {}, currentPage),
+    });
+}
+
 
 (function () {
     const program_5 = Program_Internal_withReactBatchedUsing((equal, view, state, dispatch_1) => lazyView2With(uncurry(2, equal), uncurry(2, view), state, dispatch_1), "app", (() => {
@@ -107,7 +294,7 @@ export function App_view(model, dispatch) {
                         return encoder_3(x);
                     }
                     catch (er) {
-                        Debugger_showWarning(singleton(er.message));
+                        Debugger_showWarning(singleton_1(er.message));
                         return x;
                     }
                 }), (inflate = ((x_1) => {
@@ -123,7 +310,7 @@ export function App_view(model, dispatch) {
                 }), [deflate, inflate])));
             }
             catch (er_2) {
-                Debugger_showWarning(singleton(er_2.message));
+                Debugger_showWarning(singleton_1(er_2.message));
                 patternInput = [(value_7) => value_7, (_arg) => {
                     throw new Error("Cannot inflate model");
                 }];
@@ -211,7 +398,7 @@ export function App_view(model, dispatch) {
         const newModel = patternInput_1[0];
         const cmd = patternInput_1[1];
         hmrState.contents = newModel;
-        return [newModel, Cmd_map((arg_1_1) => (new Msg$1(0, [arg_1_1])), cmd)];
+        return [newModel, Cmd_map_1((arg_1_1) => (new Msg$1(0, [arg_1_1])), cmd)];
     };
     const createModel = (tupledArg_1) => {
         const model_1_1 = tupledArg_1[0];
@@ -223,7 +410,7 @@ export function App_view(model, dispatch) {
             const patternInput_1_1 = userInit(args);
             const userModel = patternInput_1_1[0];
             const userCmd = patternInput_1_1[1];
-            return [userModel, Cmd_map((arg_2) => (new Msg$1(0, [arg_2])), userCmd)];
+            return [userModel, Cmd_map_1((arg_2) => (new Msg$1(0, [arg_2])), userCmd)];
         }
         else {
             return [hmrState.contents, Cmd_none_1()];
@@ -264,7 +451,7 @@ export function App_view(model, dispatch) {
             },
         };
     };
-    hmrSubscription = singleton([singleton("Hmr"), handler]);
+    hmrSubscription = singleton_1([singleton_1("Hmr"), handler]);
     const mapSubscribe = (subscribe, model_2_1) => Sub_batch(ofArray([Sub_map("HmrUser", (arg_4_1) => (new Msg$1(0, [arg_4_1])), subscribe(model_2_1)), hmrSubscription]));
     const mapView = (userView, model_3, dispatch_2_1) => userView(model_3)((arg_6) => dispatch_2_1(new Msg$1(0, [arg_6])));
     const mapTermination = (tupledArg_1_1) => {

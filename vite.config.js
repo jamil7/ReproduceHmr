@@ -5,6 +5,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 bundle: 'fable/App.js',
+                styles: 'index.css'
             }
         }
     }

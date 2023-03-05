@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Router.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
 
@@ -14,6 +15,8 @@
     <PackageReference Include="Fable.Elmish.Debugger" Version="4.0.0" />
     <PackageReference Include="Fable.Elmish.HMR" Version="7.0.0" />
     <PackageReference Include="Feliz" Version="2.4.1" />
+    <PackageReference Include="Feliz.Router" Version="4.0.0" />
+    <PackageReference Include="Zanaptak.TypedCssClasses" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

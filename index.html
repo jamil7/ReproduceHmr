@@ -9,9 +9,7 @@
 <body>
 <div id="app"></div>
 <script>
-    if (global === undefined) {
-        var global = window
-    }
+    window.global = window;
 </script>
 <script type="module" src="./fable/App.js"></script>
 </body>
